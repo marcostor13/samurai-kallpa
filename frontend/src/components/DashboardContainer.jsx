@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from 'react';
 import apiClient from '../api';
 import PowerChart from './PowerChart';
 import FutureCard from './FutureCard';
@@ -80,15 +81,22 @@ export default function DashboardContainer() {
 
   const handleUpdateFuture = async (id, data) => {
       try {
-          const res = await apiClient.patch(`/futures/${id}/progress`, data);
+          // If it only contains percentage, use the progress endpoint, otherwise use general update
+          const isProgressOnly = Object.keys(data).length === 1 && data.percentage !== undefined;
+          const endpoint = isProgressOnly ? `/futures/${id}/progress` : `/futures/${id}`;
+          
+          const res = await apiClient.patch(endpoint, data);
           const updatedFutures = futures.map(f => f._id === id ? res.data : f);
           setFutures(updatedFutures);
+          
           // Recalculate power level
           const avg = updatedFutures.length > 0 
               ? Math.round(updatedFutures.reduce((acc, curr) => acc + curr.progressPercentage, 0) / updatedFutures.length)
               : 0;
           setPowerLevel(avg);
-          import('../store/uiStore').then(({ uiStore }) => uiStore.showNotification('Progreso guardado', 'success'));
+          
+          const msg = isProgressOnly ? 'Progreso guardado' : 'FI actualizado';
+          import('../store/uiStore').then(({ uiStore }) => uiStore.showNotification(msg, 'success'));
       } catch (error) {
           console.error(error);
       }

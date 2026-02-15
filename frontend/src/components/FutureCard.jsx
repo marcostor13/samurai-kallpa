@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import AntigravityCard from './AntigravityCard';
 import KatanaButton from './KatanaButton';
 import apiClient from '../api';
@@ -20,21 +21,11 @@ export default function FutureCard({ future, onUpdate, onDelete, index }) {
   };
 
   const handleUpdateInfo = async () => {
-    try {
-        const res = await apiClient.patch(`/futures/${future._id}`, {
-            title: editedTitle,
-            description: editedDescription
-        });
-        uiStore.showNotification('FI actualizado', 'success');
-        setIsEditing(false);
-        // We'll rely on parent state update if possible, or just local refresh
-        // For simplicity in this island, we might need a refresh or parent callback
-        // DashboardContainer handles progress, but not title/desc yet in its handleUpdate...
-        // Let's assume onUpdate can handle full data or just trigger a refresh
-        onUpdate(future._id, { ...res.data });
-    } catch (err) {
-        console.error(err);
-    }
+    onUpdate(future._id, {
+        title: editedTitle,
+        description: editedDescription
+    });
+    setIsEditing(false);
   };
 
   return (
