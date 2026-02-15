@@ -22,6 +22,46 @@ export default function ResourcesContainer() {
         { name: "MANUAL DE IDENTIDAD", file: "MANUAL DE DISTINTIVOS IDENTIDAD CREAR (1).pdf", icon: <Star className="text-kallpa-teal" /> }
     ];
 
+    // Generate Google Calendar Link
+    const getGoogleCalendarLink = (item) => {
+        const start = new Date(item.date).toISOString().replace(/-|:|\.\d+/g, '');
+        const endDay = item.endDate ? new Date(item.endDate) : new Date(item.date);
+        // Default to 1 hour if no specific time, or 24h for FDS
+        const end = new Date(endDay.getTime() + (item.type === 'FDS' ? 24 : 1) * 60 * 60 * 1000).toISOString().replace(/-|:|\.\d+/g, '');
+        const details = encodeURIComponent(`${item.subtitle || ''}\nLugar: ${item.location}\nEquipo 23 Samurai Kallpa`.trim());
+        const title = encodeURIComponent(`Samurai: ${item.title}`);
+        return `https://www.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${details}&location=${encodeURIComponent(item.location)}`;
+    };
+
+    // Generate ICS file for iOS/Outlook
+    const downloadICS = (item) => {
+        const start = new Date(item.date).toISOString().replace(/-|:|\.\d+/g, '');
+        const endDay = item.endDate ? new Date(item.endDate) : new Date(item.date);
+        const end = new Date(endDay.getTime() + (item.type === 'FDS' ? 24 : 1) * 60 * 60 * 1000).toISOString().replace(/-|:|\.\d+/g, '');
+        
+        const icsContent = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Samurai Kallpa//Agenda//ES
+BEGIN:VEVENT
+UID:${item.id}@samuraikallpa.com
+DTSTAMP:${start}
+DTSTART:${start}
+DTEND:${end}
+SUMMARY:Samurai: ${item.title}
+DESCRIPTION:${item.subtitle || ''} - Equipo 23
+LOCATION:${item.location}
+END:VEVENT
+END:VCALENDAR`;
+
+        const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.setAttribute('download', `${item.title.replace(/\s+/g, '_')}.ics`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     return (
         <div className="max-w-6xl mx-auto px-4 space-y-12">
             {/* Header */}
@@ -128,12 +168,37 @@ export default function ResourcesContainer() {
                                             </div>
                                         </div>
                                         
-                                        <div className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border ${
-                                            item.type === 'FDS' ? 'bg-kallpa-fire/10 text-kallpa-fire border-kallpa-fire/30' : 
-                                            item.type === 'ENTRENAMIENTO' ? 'bg-kallpa-teal/10 text-kallpa-teal border-kallpa-teal/30' :
-                                            'bg-gray-800 text-gray-400 border-gray-700'
-                                        }`}>
-                                            {item.type}
+                                        <div className="flex flex-col items-end gap-3">
+                                            <div className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border ${
+                                                item.type === 'FDS' ? 'bg-kallpa-fire/10 text-kallpa-fire border-kallpa-fire/30' : 
+                                                item.type === 'ENTRENAMIENTO' ? 'bg-kallpa-teal/10 text-kallpa-teal border-kallpa-teal/30' :
+                                                'bg-gray-800 text-gray-400 border-gray-700'
+                                            }`}>
+                                                {item.type}
+                                            </div>
+                                            
+                                            {!isPast && (
+                                                <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                    <a 
+                                                        href={getGoogleCalendarLink(item)}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="flex items-center gap-1 px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[9px] text-white hover:bg-kallpa-gold hover:text-black hover:border-kallpa-gold transition-all uppercase font-bold tracking-tighter"
+                                                        title="Agendar en Google"
+                                                    >
+                                                        <img src="https://www.google.com/favicon.ico" alt="G" className="w-3 h-3 brightness-0 invert group-hover:invert-0" />
+                                                        Google
+                                                    </a>
+                                                    <button 
+                                                        onClick={() => downloadICS(item)}
+                                                        className="flex items-center gap-1 px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[9px] text-white hover:bg-kallpa-teal hover:text-black hover:border-kallpa-teal transition-all uppercase font-bold tracking-tighter"
+                                                        title="Agendar en iOS / Outlook"
+                                                    >
+                                                        <Calendar size={12} />
+                                                        iOS
+                                                    </button>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
