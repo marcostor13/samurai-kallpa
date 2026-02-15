@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { API_URL } from '../config';
 import AntigravityCard from './AntigravityCard';
 
 export default function TribeContainer() {
@@ -9,7 +10,7 @@ export default function TribeContainer() {
   useEffect(() => {
     const fetchResources = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/tribe/feed');
+        const res = await axios.get(`${API_URL}/tribe/feed`);
         setResources(res.data);
       } catch (error) {
         console.error('Error fetching tribe feed', error);

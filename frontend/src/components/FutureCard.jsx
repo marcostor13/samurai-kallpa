@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { API_URL } from '../config';
 import AntigravityCard from './AntigravityCard';
 import KatanaButton from './KatanaButton';
 
@@ -64,7 +66,7 @@ export default function FutureCard({ future, onUpdate, index }) {
                             
                             try {
                                 const token = localStorage.getItem('token');
-                                await axios.post(`http://localhost:3000/futures/${future._id}/evidence`, formData, {
+                                await axios.post(`${API_URL}/futures/${future._id}/evidence`, formData, {
                                     headers: { 
                                         'Authorization': `Bearer ${token}`,
                                         'Content-Type': 'multipart/form-data'
