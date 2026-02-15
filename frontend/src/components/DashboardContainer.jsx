@@ -164,7 +164,7 @@ export default function DashboardContainer() {
         <div>
             <span className="text-kallpa-gold font-display text-xs tracking-[0.4em] uppercase mb-2 block">Centro de Comando</span>
             <h1 className="text-4xl md:text-5xl font-display text-white tracking-tight">
-                {viewMode === 'PERSONAL' ? 'Dashboard Personal' : 'El Equipo Samurai'}
+                {viewMode === 'PERSONAL' ? 'Panel Personal' : 'El Equipo Samurai'}
             </h1>
         </div>
         
@@ -190,7 +190,7 @@ export default function DashboardContainer() {
                 ) : (
                     <>
                         <User size={16} className="group-hover:scale-110 transition-transform" />
-                        Mi Dashboard
+                        Mi Panel
                     </>
                 )}
             </button>

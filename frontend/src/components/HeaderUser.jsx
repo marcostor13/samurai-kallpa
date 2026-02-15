@@ -44,7 +44,7 @@ export default function HeaderUser() {
                 Inicio
             </a>
             <a href="/dashboard" className="text-white hover:text-kallpa-gold font-bold font-display uppercase tracking-widest text-sm transition-colors">
-                Dashboard
+                Panel
             </a>
             <button 
                 onClick={handleLogout} 
@@ -105,7 +105,7 @@ export default function HeaderUser() {
                     onClick={() => setIsMenuOpen(false)}
                   >
                     <LayoutDashboard size={20} className="text-kallpa-gold" />
-                    Dashboard
+                    Panel
                   </a>
                   <a 
                     href="/recursos" 
