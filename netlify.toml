@@ -1,16 +1,30 @@
 [build]
   base = ""
-  command = "cd backend && npm install && npm run build && cd ../frontend && npm install && npm run build && cd .. && mkdir -p netlify-functions && cp backend/dist/lambda.js netlify-functions/"
+  command = "cd backend && npm install && npm run build && cd ../frontend && npm install && npm run build && cd .. && mkdir -p netlify-functions/api && cp -r backend/dist/* netlify-functions/api/ && mv netlify-functions/api/lambda.js netlify-functions/api/index.js"
   publish = "frontend/dist"
   functions = "netlify-functions"
 
 [functions]
   node_bundler = "esbuild"
-  external_node_modules = ["@nestjs/microservices", "@nestjs/websockets", "cache-manager", "class-transformer", "class-validator"]
+  external_node_modules = [
+    "@nestjs/common",
+    "@nestjs/core",
+    "@nestjs/microservices",
+    "@nestjs/websockets",
+    "@nestjs/platform-express",
+    "@nestjs/mongoose",
+    "@nestjs/config",
+    "@nestjs/jwt",
+    "@nestjs/passport",
+    "cache-manager",
+    "class-transformer",
+    "class-validator",
+    "@vendia/serverless-express"
+  ]
 
 [[redirects]]
   from = "/api/*"
-  to = "/.netlify/functions/lambda/:splat"
+  to = "/.netlify/functions/api/:splat"
   status = 200
   force = true
 
