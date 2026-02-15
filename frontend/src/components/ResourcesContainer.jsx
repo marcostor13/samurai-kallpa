@@ -178,24 +178,24 @@ END:VCALENDAR`;
                                             </div>
                                             
                                             {!isPast && (
-                                                <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                <div className="flex flex-wrap md:flex-nowrap gap-2 mt-1">
                                                     <a 
                                                         href={getGoogleCalendarLink(item)}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="flex items-center gap-1 px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[9px] text-white hover:bg-kallpa-gold hover:text-black hover:border-kallpa-gold transition-all uppercase font-bold tracking-tighter"
+                                                        className="flex items-center gap-2 px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[9px] text-white hover:bg-kallpa-gold hover:text-black hover:border-kallpa-gold transition-all uppercase font-black tracking-tighter"
                                                         title="Agendar en Google"
                                                     >
-                                                        <img src="https://www.google.com/favicon.ico" alt="G" className="w-3 h-3 brightness-0 invert group-hover:invert-0" />
-                                                        Google
+                                                        <img src="https://www.google.com/favicon.ico" alt="G" className="w-3 h-3 group-hover:brightness-0 group-hover:invert-0" />
+                                                        Agendar con Google
                                                     </a>
                                                     <button 
                                                         onClick={() => downloadICS(item)}
-                                                        className="flex items-center gap-1 px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[9px] text-white hover:bg-kallpa-teal hover:text-black hover:border-kallpa-teal transition-all uppercase font-bold tracking-tighter"
+                                                        className="flex items-center gap-2 px-3 py-1.5 bg-white/5 border border-white/10 rounded-lg text-[9px] text-white hover:bg-kallpa-teal hover:text-black hover:border-kallpa-teal transition-all uppercase font-black tracking-tighter"
                                                         title="Agendar en iOS / Outlook"
                                                     >
                                                         <Calendar size={12} />
-                                                        iOS
+                                                        Agendar con iOS
                                                     </button>
                                                 </div>
                                             )}
