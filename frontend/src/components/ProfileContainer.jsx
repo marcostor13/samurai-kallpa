@@ -91,15 +91,14 @@ export default function ProfileContainer({ memberId: propMemberId } = {}) {
                                 }}
                             />
                         </div>
-                        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-kallpa-gold text-black px-6 py-1 rounded-full font-black text-sm shadow-xl">
-                            {averageProgress}% PODER
+                        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-kallpa-gold text-black px-6 py-1.5 rounded-full font-black text-[10px] uppercase tracking-tighter shadow-xl whitespace-nowrap">
+                            {averageProgress}% Avance FIs
                         </div>
                     </div>
 
                     {/* Basic Info */}
                     <div className="flex-grow text-center md:text-left">
-                        <h1 className="text-4xl md:text-6xl font-display text-white mb-2 drop-shadow-sm">{member.fullName}</h1>
-                        <p className="text-kallpa-gold font-display tracking-widest text-lg mb-6 uppercase">{member.role || 'WARRIOR'}</p>
+                        <h1 className="text-4xl md:text-6xl font-display text-white mb-6 drop-shadow-sm">{member.fullName}</h1>
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
                             {member.email && (
