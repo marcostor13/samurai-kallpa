@@ -61,4 +61,9 @@ export class FutureAgent {
     async deleteFuture(@Param('id') id: string) {
         return this.visionArchitect.deleteFuture(id);
     }
+
+    @Delete(':id/evidence/:evidenceId')
+    async deleteEvidence(@Param('id') id: string, @Param('evidenceId') evidenceId: string) {
+        return this.evidenceCollector.deleteEvidence(id, evidenceId);
+    }
 }

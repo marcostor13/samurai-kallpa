@@ -77,7 +77,7 @@ export default function TribeMemberCard({ member }) {
                     ))}
                 </ul>
             ) : (
-                <p className="text-xs text-gray-600 text-center py-6 bg-black/10 rounded-xl border border-dashed border-gray-800 italic">Concentrando Ki...</p>
+                <p className="text-xs text-gray-600 text-center py-6 bg-black/10 rounded-xl border border-dashed border-gray-800 italic uppercase tracking-widest font-display">Falta subir sus FIs</p>
             )}
         </div>
     </AntigravityCard>

@@ -18,9 +18,6 @@ export default function GlobalLoader() {
                 <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-12 h-12 bg-kallpa-gold rounded-full opacity-20 animate-ping"></div>
                 </div>
-                <div className="mt-8 text-kallpa-gold font-display text-xs tracking-[0.4em] uppercase text-center animate-pulse">
-                    Enfocando Energía...
-                </div>
             </div>
         </div>
     );

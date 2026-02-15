@@ -37,10 +37,20 @@ import TeamSection from '../components/TeamSection.jsx';
                 <p class="text-kallpa-muted text-xs uppercase tracking-[0.3em] mb-4">Entrenamiento por</p>
                 <img src="/logocrear.png" alt="Crear Poder Sin Límites" class="h-16 md:h-20 w-auto filter brightness-0 invert drop-shadow-xl mx-auto" style="filter: brightness(0) invert(1);" />
             </div>
+
+            <!-- Scroll Indicator -->
+            <a href="#tribu" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce-slow opacity-60 hover:opacity-100 transition-opacity cursor-pointer z-20 group no-underline">
+                <span class="text-[9px] uppercase tracking-[0.4em] font-display text-kallpa-gold/70 group-hover:text-kallpa-gold transition-colors">La Tribu</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-kallpa-gold">
+                    <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+                </svg>
+            </a>
         </section>
         
         <!-- Team Grid -->
-        <TeamSection client:visible />
+        <div id="tribu" class="w-full pt-12">
+            <TeamSection client:visible />
+        </div>
     </main>
 </MainLayout>
 
@@ -67,12 +77,22 @@ import TeamSection from '../components/TeamSection.jsx';
         0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
         50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.1); }
     }
+    @keyframes bounce-slow {
+        0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+        40% { transform: translate(-50%, -10px); }
+        60% { transform: translate(-50%, -5px); }
+    }
+    
+    html {
+        scroll-behavior: smooth;
+    }
     
     .animate-fadeInDown { animation: fadeInDown 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     .animate-fadeInUp { animation: fadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     .animate-float { animation: float 6s ease-in-out infinite; }
     .animate-gradient { animation: gradient 8s ease infinite; background-size: 300% 300%; }
     .animate-pulse-slow { animation: pulse-slow 6s ease-in-out infinite; }
+    .animate-bounce-slow { animation: bounce-slow 2s ease-in-out infinite; }
     .delay-300 { animation-delay: 300ms; }
     .delay-500 { animation-delay: 500ms; }
 </style>

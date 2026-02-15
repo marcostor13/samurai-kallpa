@@ -310,7 +310,7 @@ export default function DashboardContainer() {
                         />
                     ))}
                     {futures.length === 0 && (
-                        <p className="text-kallpa-muted text-center py-8">No has declarado ningún futuro imposible aún. ¡Empieza ahora!</p>
+                        <p className="text-kallpa-muted text-center py-8 font-display uppercase tracking-widest text-xs">Falta subir sus FIs</p>
                     )}
                 </div>
             </div>

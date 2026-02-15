@@ -161,8 +161,25 @@ export default function FutureCard({ future, onUpdate, onDelete, index }) {
                                         <span className="text-[8px] text-kallpa-teal uppercase font-bold tracking-tighter">Archivo</span>
                                     </div>
                                 )}
-                                <div className="absolute inset-0 bg-kallpa-gold/60 opacity-0 group-hover/ev:opacity-100 transition-opacity flex items-center justify-center">
-                                    <ExternalLink size={20} className="text-black" />
+                                <div className="absolute inset-0 bg-kallpa-gold/60 opacity-0 group-hover/ev:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
+                                    <button 
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            if (window.confirm('¿Eliminar esta evidencia?')) {
+                                                apiClient.delete(`/futures/${future._id}/evidence/${ev._id}`)
+                                                    .then(res => {
+                                                        uiStore.showNotification('Evidencia eliminada', 'success');
+                                                        onUpdate(future._id, { ...res.data });
+                                                    });
+                                            }
+                                        }}
+                                        className="p-1 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                                        title="Eliminar evidencia"
+                                    >
+                                        <Trash2 size={14} />
+                                    </button>
+                                    <ExternalLink size={18} className="text-black" />
                                 </div>
                             </a>
                         );

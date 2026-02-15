@@ -21,4 +21,12 @@ export class EvidenceCollectorSkill {
         });
         return future.save();
     }
+
+    async deleteEvidence(futureId: string, evidenceId: string): Promise<ImpossibleFuture> {
+        const future = await this.futureModel.findById(futureId);
+        if (!future) throw new NotFoundException('Future not found');
+
+        future.evidences = future.evidences.filter(ev => (ev as any)._id.toString() !== evidenceId);
+        return future.save();
+    }
 }
