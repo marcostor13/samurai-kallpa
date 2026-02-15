@@ -6,7 +6,15 @@
 
 [functions]
   node_bundler = "esbuild"
-  external_node_modules = ["bcrypt"]
+  external_node_modules = [
+    "@nestjs/microservices",
+    "@nestjs/websockets",
+    "cache-manager",
+    "class-transformer",
+    "class-validator",
+    "@codegenie/serverless-express",
+    "bcrypt"
+  ]
 
 [[redirects]]
   from = "/api/*"

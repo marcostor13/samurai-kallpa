@@ -1,0 +1,4 @@
+# Terminal Safety
+- Do not use `&&` to chain terminal commands. 
+- Use separate sequential command calls or use `;` (if appropriate for the shell) to ensure compatibility with Windows PowerShell environments.
+- PowerShell on some systems may treat `&&` as an invalid operator or fail due to encoding issues when chained.
