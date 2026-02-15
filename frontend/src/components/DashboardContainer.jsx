@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { API_URL } from '../config';
+import apiClient from '../api';
 import PowerChart from './PowerChart';
 import FutureCard from './FutureCard';
 import KatanaButton from './KatanaButton';
@@ -31,9 +29,9 @@ export default function DashboardContainer() {
       try {
         const config = { headers: { Authorization: `Bearer ${token}` } };
         const [dashboardRes, futuresRes, profileRes] = await Promise.all([
-          axios.get(`${API_URL}/samurai/dashboard`, config),
-          axios.get(`${API_URL}/futures`, config),
-          axios.get(`${API_URL}/samurai/me`, config)
+          apiClient.get('/samurai/dashboard'),
+          apiClient.get('/futures'),
+          apiClient.get('/samurai/me')
         ]);
         
         setUserProfile(profileRes.data);
@@ -70,40 +68,52 @@ export default function DashboardContainer() {
       e.preventDefault();
       const token = localStorage.getItem('token');
       try {
-          const res = await axios.post(`${API_URL}/futures`, { title: newFutureTitle }, {
-              headers: { Authorization: `Bearer ${token}` }
-          });
+          const res = await apiClient.post('/futures', { title: newFutureTitle });
           setFutures([...futures, res.data]);
           setNewFutureTitle('');
           setShowCreate(false);
+          import('../store/uiStore').then(({ uiStore }) => uiStore.showNotification('¡Futuro Imposible Declarado!', 'success'));
       } catch (error) {
           console.error(error);
       }
   };
 
   const handleUpdateFuture = async (id, data) => {
-      // ... same logic ...
-      const token = localStorage.getItem('token');
       try {
-          const res = await axios.patch(`${API_URL}/futures/${id}/progress`, data, {
-               headers: { Authorization: `Bearer ${token}` }
-          });
+          const res = await apiClient.patch(`/futures/${id}/progress`, data);
           const updatedFutures = futures.map(f => f._id === id ? res.data : f);
           setFutures(updatedFutures);
           // Recalculate power level
-          const avg = Math.round(updatedFutures.reduce((acc, curr) => acc + curr.progressPercentage, 0) / updatedFutures.length);
+          const avg = updatedFutures.length > 0 
+              ? Math.round(updatedFutures.reduce((acc, curr) => acc + curr.progressPercentage, 0) / updatedFutures.length)
+              : 0;
           setPowerLevel(avg);
+          import('../store/uiStore').then(({ uiStore }) => uiStore.showNotification('Progreso guardado', 'success'));
       } catch (error) {
           console.error(error);
       }
   };
 
-  const fetchTribeData = async (token) => {
+  const handleDeleteFuture = async (id) => {
+    if (!window.confirm('¿Estás seguro de que deseas eliminar este Futuro Imposible?')) return;
+    try {
+        await apiClient.delete(`/futures/${id}`);
+        const updatedFutures = futures.filter(f => f._id !== id);
+        setFutures(updatedFutures);
+        const avg = updatedFutures.length > 0 
+            ? Math.round(updatedFutures.reduce((acc, curr) => acc + curr.progressPercentage, 0) / updatedFutures.length)
+            : 0;
+        setPowerLevel(avg);
+        import('../store/uiStore').then(({ uiStore }) => uiStore.showNotification('FI eliminado correctamente', 'success'));
+    } catch (error) {
+        console.error(error);
+    }
+  };
+
+  const fetchTribeData = async () => {
     setLoadingTribe(true);
     try {
-        const res = await axios.get(`${API_URL}/tribe/team`, {
-            headers: { Authorization: `Bearer ${token}` }
-        });
+        const res = await apiClient.get('/tribe/team');
         // Filter out members who don't have images or are explicitly requested to be removed
         const usersToRemove = ['ALFREDO', 'ANTHONY', 'ARTURO', 'RAYZA', 'MAGGIE'];
         const filteredTribe = res.data.filter(member => !usersToRemove.includes(member.username));
@@ -261,7 +271,7 @@ export default function DashboardContainer() {
                 <div className="flex justify-between items-center mb-6">
                     <h2 className="text-xl font-display text-kallpa-text">Mis Futuros Imposibles</h2>
                     <KatanaButton onClick={() => setShowCreate(!showCreate)} className="text-xs px-4 py-2">
-                        {showCreate ? 'Cancelar' : 'Declarar Futuro'}
+                        {showCreate ? 'Cancelar' : 'Agregar FI'}
                     </KatanaButton>
                 </div>
     
@@ -283,7 +293,13 @@ export default function DashboardContainer() {
     
                 <div className="space-y-4">
                     {futures.map((future, idx) => (
-                        <FutureCard key={future._id} future={future} onUpdate={handleUpdateFuture} index={idx} />
+                        <FutureCard 
+                            key={future._id} 
+                            future={future} 
+                            onUpdate={handleUpdateFuture} 
+                            onDelete={handleDeleteFuture}
+                            index={idx} 
+                        />
                     ))}
                     {futures.length === 0 && (
                         <p className="text-kallpa-muted text-center py-8">No has declarado ningún futuro imposible aún. ¡Empieza ahora!</p>

@@ -13,11 +13,11 @@ services:
         generateValue: true
       - key: PORT
         value: 3000
-      - key: AWS_ACCESS_KEY_ID
+      - key: AWS_ACCESS_KEY_ID2
         sync: false
-      - key: AWS_SECRET_ACCESS_KEY
+      - key: AWS_SECRET_ACCESS_KEY2
         sync: false
-      - key: AWS_REGION
+      - key: AWS_REGION2
         value: us-east-1
-      - key: AWS_S3_BUCKET_NAME
+      - key: AWS_S3_BUCKET_NAME2
         sync: false

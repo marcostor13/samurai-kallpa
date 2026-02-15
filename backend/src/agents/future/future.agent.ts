@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Patch, Param, UseGuards, Request, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, Post, Body, Get, Patch, Param, Delete, UseGuards, Request, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { VisionArchitectSkill } from '../../skills/future/vision-architect.skill';
@@ -50,5 +50,15 @@ export class FutureAgent {
     @Patch(':id/progress')
     async updateProgress(@Param('id') id: string, @Body() body: any) {
         return this.progressTracker.updateProgress(id, body.percentage, body.status);
+    }
+
+    @Patch(':id')
+    async updateFuture(@Param('id') id: string, @Body() body: any) {
+        return this.visionArchitect.updateFuture(id, body);
+    }
+
+    @Delete(':id')
+    async deleteFuture(@Param('id') id: string) {
+        return this.visionArchitect.deleteFuture(id);
     }
 }

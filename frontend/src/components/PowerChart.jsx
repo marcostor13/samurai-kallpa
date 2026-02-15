@@ -43,7 +43,7 @@ export default function PowerChart({ percentage = 0 }) {
       </svg>
       <div className="absolute text-center">
         <span className="text-3xl font-display font-bold text-white block">{percentage}%</span>
-        <span className="text-xs text-kallpa-muted uppercase tracking-widest">Nivel</span>
+        <span className="text-[10px] text-kallpa-muted uppercase tracking-widest leading-tight block w-24 mx-auto mt-1">Promedio de avance de Futuros imposibles</span>
       </div>
     </div>
   );

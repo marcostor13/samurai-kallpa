@@ -1,5 +1,7 @@
 ---
 import HeaderUser from '../components/HeaderUser.jsx';
+import GlobalLoader from '../components/GlobalLoader.jsx';
+import NotificationToast from '../components/NotificationToast.jsx';
 const { title } = Astro.props;
 ---
 
@@ -23,6 +25,8 @@ const { title } = Astro.props;
         </header>
         <slot />
     </div>
+    <GlobalLoader client:only="react" />
+    <NotificationToast client:only="react" />
     
     <style is:global>
         .clip-path-katana {

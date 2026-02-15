@@ -29,4 +29,16 @@ export class VisionArchitectSkill {
         future.evidences.push(evidence as any);
         return future.save();
     }
+
+    async updateFuture(id: string, data: any) {
+        const updated = await this.futureModel.findByIdAndUpdate(id, { $set: data }, { new: true });
+        if (!updated) throw new NotFoundException('Future not found');
+        return updated;
+    }
+
+    async deleteFuture(id: string) {
+        const deleted = await this.futureModel.findByIdAndDelete(id);
+        if (!deleted) throw new NotFoundException('Future not found');
+        return { success: true };
+    }
 }
