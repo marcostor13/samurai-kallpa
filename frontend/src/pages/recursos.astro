@@ -1,0 +1,10 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import ResourcesContainer from '../components/ResourcesContainer';
+---
+
+<MainLayout title="Información General | Samurai Kallpa">
+	<main class="pt-24 pb-12">
+		<ResourcesContainer client:load />
+	</main>
+</MainLayout>

@@ -1,0 +1,8 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import DashboardContainer from '../components/DashboardContainer.jsx';
+---
+
+<MainLayout title="Dashboard">
+    <DashboardContainer client:only="react" />
+</MainLayout>

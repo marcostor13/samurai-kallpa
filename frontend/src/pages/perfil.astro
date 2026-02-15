@@ -1,0 +1,10 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import ProfileContainer from '../components/ProfileContainer';
+---
+
+<MainLayout title="Perfil de Guerrero | Samurai Kallpa">
+	<main class="pt-24 pb-12">
+		<ProfileContainer client:load />
+	</main>
+</MainLayout>
