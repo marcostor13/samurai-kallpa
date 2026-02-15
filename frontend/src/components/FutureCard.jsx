@@ -129,25 +129,44 @@ export default function FutureCard({ future, onUpdate, onDelete, index }) {
           {future.evidences?.length > 0 && (
             <div className="space-y-3">
                 <h4 className="text-[10px] text-gray-500 uppercase tracking-widest font-bold">Evidencias ({future.evidences.length})</h4>
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-                    {future.evidences.map((ev, i) => (
-                        <a 
-                            key={i} 
-                            href={ev.url} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="group/ev relative aspect-square rounded-md overflow-hidden bg-black/40 border border-white/10 hover:border-kallpa-gold/50 transition-all flex flex-col items-center justify-center p-1"
-                        >
-                            {ev.type === 'IMAGE' ? (
-                                <img src={ev.url} alt="Evidencia" className="w-full h-full object-cover rounded" />
-                            ) : (
-                                <FileText className="text-kallpa-teal" size={24} />
-                            )}
-                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover/ev:opacity-100 transition-opacity flex items-center justify-center">
-                                <ExternalLink size={16} className="text-white" />
-                            </div>
-                        </a>
-                    ))}
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                    {future.evidences.map((ev, i) => {
+                        const isImage = ev.type === 'IMAGE' || ev.url?.match(/\.(jpg|jpeg|png|gif|webp)$/i);
+                        return (
+                            <a 
+                                key={i} 
+                                href={ev.url} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="group/ev relative aspect-square rounded-lg overflow-hidden bg-white/5 border border-white/10 hover:border-kallpa-gold/50 transition-all flex flex-col items-center justify-center p-1 shadow-lg"
+                            >
+                                {isImage ? (
+                                    <img 
+                                        src={ev.url} 
+                                        alt="Evidencia" 
+                                        className="w-full h-full object-cover rounded-md" 
+                                        onError={(e) => {
+                                            e.target.style.display = 'none';
+                                            e.target.parentElement.classList.add('flex-col');
+                                            // Show icon if image fails
+                                            const icon = document.createElement('div');
+                                            icon.className = 'text-kallpa-gold opacity-50';
+                                            icon.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>';
+                                            e.target.parentElement.appendChild(icon);
+                                        }}
+                                    />
+                                ) : (
+                                    <div className="flex flex-col items-center gap-1">
+                                        <FileText className="text-kallpa-teal" size={32} />
+                                        <span className="text-[8px] text-kallpa-teal uppercase font-bold tracking-tighter">Archivo</span>
+                                    </div>
+                                )}
+                                <div className="absolute inset-0 bg-kallpa-gold/60 opacity-0 group-hover/ev:opacity-100 transition-opacity flex items-center justify-center">
+                                    <ExternalLink size={20} className="text-black" />
+                                </div>
+                            </a>
+                        );
+                    })}
                 </div>
             </div>
           )}
