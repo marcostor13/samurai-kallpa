@@ -161,7 +161,8 @@ export default function FutureCard({ future, onUpdate, onDelete, index }) {
                                         <span className="text-[8px] text-kallpa-teal uppercase font-bold tracking-tighter">Archivo</span>
                                     </div>
                                 )}
-                                <div className="absolute inset-0 bg-kallpa-gold/60 opacity-0 group-hover/ev:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
+                                <div className="absolute inset-0 bg-kallpa-gold/40 opacity-0 group-hover/ev:opacity-100 transition-opacity flex items-center justify-center">
+                                    <ExternalLink size={24} className="text-black/80" />
                                     <button 
                                         onClick={(e) => {
                                             e.preventDefault();
@@ -174,12 +175,11 @@ export default function FutureCard({ future, onUpdate, onDelete, index }) {
                                                     });
                                             }
                                         }}
-                                        className="p-1 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                                        className="absolute top-1.5 right-1.5 p-1.5 bg-black/60 text-white rounded-md hover:bg-red-600 transition-all z-30 shadow-xl backdrop-blur-sm group/del"
                                         title="Eliminar evidencia"
                                     >
-                                        <Trash2 size={14} />
+                                        <Trash2 size={12} className="group-hover/del:scale-110 transition-transform" />
                                     </button>
-                                    <ExternalLink size={18} className="text-black" />
                                 </div>
                             </a>
                         );
