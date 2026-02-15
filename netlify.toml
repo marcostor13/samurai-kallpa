@@ -1,11 +1,14 @@
 [build]
-  command = "npm install && npm run build"
-  publish = "dist"
-  base = "frontend"
+  command = "cd backend && npm install && npm run build && cd ../frontend && npm install && npm run build"
+  publish = "frontend/dist"
+  functions = "backend/dist"
+
+[functions]
+  node_bundler = "esbuild"
 
 [[redirects]]
   from = "/api/*"
-  to = "https://tu-backend-desplegado.com/:splat"
+  to = "/.netlify/functions/lambda/:splat"
   status = 200
   force = true
 
