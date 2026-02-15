@@ -126,11 +126,9 @@ export default function DashboardContainer() {
         const usersToRemove = ['ALFREDO', 'ANTHONY', 'ARTURO', 'RAYZA', 'MAGGIE'];
         const filteredTribe = res.data.filter(member => !usersToRemove.includes(member.username));
 
-        // Sort by power level
+        // Sort alphabetically by name
         const sortedTribe = filteredTribe.sort((a, b) => {
-            const avgA = a.futures.length ? a.futures.reduce((acc, c) => acc + c.progressPercentage, 0) / a.futures.length : 0;
-            const avgB = b.futures.length ? b.futures.reduce((acc, c) => acc + c.progressPercentage, 0) / b.futures.length : 0;
-            return avgB - avgA;
+            return (a.fullName || '').localeCompare(b.fullName || '');
         });
         setTribe(sortedTribe);
     } catch (error) {
