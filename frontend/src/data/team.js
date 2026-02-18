@@ -23,7 +23,7 @@ export const teamMembers = [
     { name: "Ketty Doris Bautista Ochoa", nickname: "Ketty", image: "/integrantes/Ketty.webp" },
     { name: "Limber Santiago Quispe Trujillo", nickname: "Limber", image: "/integrantes/Limber.webp" },
     { name: "Luis Feliberto Palomino Huahuachampi", nickname: "Luis", image: "/integrantes/Luis.webp" },
-    { name: "Linid", nickname: "Linid", image: "/integrantes/Linid.webp" },
+    { name: "Linid Johana Valencia H.", nickname: "Linid", image: "/integrantes/Linid.webp" },
     { name: "Marcos Orlando Torres Alarcón", nickname: "Marcos", image: "/integrantes/Marcos.webp" },
     { name: "Martín Vicente Espinoza Chávez", nickname: "Martín", image: "/integrantes/Martín.webp" },
     { name: "Nasha Mercedes Gutiérrez Calero", nickname: "Nasha", image: "/integrantes/Nasha.webp" },

@@ -18,7 +18,7 @@ export default function TeamSection() {
                     "Gissella Milagros Huamán Celestino",
                     "Jessica Pilar López López",
                     "Rosa Vaneza Ramirez Hualpa",
-                    "Linid"
+                    "Linid Johana Valencia H."
                 ];
                 
                 const managers = teamMembers.filter(m => managerNames.includes(m.name));

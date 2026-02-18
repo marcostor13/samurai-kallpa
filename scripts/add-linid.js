@@ -34,7 +34,7 @@ async function addLinid() {
 
         if (existing) {
             console.log('User LINID already exists. Updating credentials...');
-            existing.fullName = 'Linid';
+            existing.fullName = 'Linid Johana Valencia H.';
             existing.occupation = 'COORDINADORA';
             existing.avatarUrl = '/integrantes/Linid.webp';
             existing.password = hashedPassword;
@@ -43,7 +43,7 @@ async function addLinid() {
         } else {
             const newUser = new User({
                 username,
-                fullName: 'Linid',
+                fullName: 'Linid Johana Valencia H.',
                 password: hashedPassword,
                 role: 'SENSEI', // Consistent with coordinator role
                 occupation: 'COORDINADORA',
