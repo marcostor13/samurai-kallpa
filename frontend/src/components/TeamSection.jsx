@@ -17,7 +17,8 @@ export default function TeamSection() {
                     "Giovana Palomino Marcos",
                     "Gissella Milagros Huamán Celestino",
                     "Jessica Pilar López López",
-                    "Rosa Vaneza Ramirez Hualpa"
+                    "Rosa Vaneza Ramirez Hualpa",
+                    "Linid"
                 ];
                 
                 const managers = teamMembers.filter(m => managerNames.includes(m.name));
@@ -52,7 +53,7 @@ export default function TeamSection() {
 
                 return (
                     <>
-                        {managers.length > 0 && renderMembers(managers, "Mánagers", "text-kallpa-gold")}
+                        {managers.length > 0 && renderMembers(managers, "Mánagers y Coordinación", "text-kallpa-gold")}
                         {warriors.length > 0 && renderMembers(warriors, "Equipo Samurai", "text-white")}
                     </>
                 );
