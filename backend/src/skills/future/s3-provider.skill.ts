@@ -2,6 +2,7 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { v4 as uuidv4 } from 'uuid';
+import sharp from 'sharp';
 
 @Injectable()
 export class S3ProviderSkill {
@@ -33,7 +34,27 @@ export class S3ProviderSkill {
     }
 
     async uploadFile(file: Express.Multer.File): Promise<string> {
-        const fileKey = `${uuidv4()}-${file.originalname}`;
+        let fileBuffer = file.buffer;
+        let contentType = file.mimetype;
+        let fileExtension = file.originalname.split('.').pop()?.toLowerCase();
+
+        // Convert images to WebP
+        if (contentType.startsWith('image/')) {
+            try {
+                fileBuffer = await sharp(file.buffer)
+                    .webp({ quality: 80 })
+                    .toBuffer();
+                contentType = 'image/webp';
+                fileExtension = 'webp';
+            } catch (error) {
+                console.warn('Image conversion failed, uploading original format', error);
+            }
+        }
+
+        // Ensure filename ends with correct extension
+        const originalNameWithoutExt = file.originalname.replace(/\.[^/.]+$/, "");
+        const fileKey = `${uuidv4()}-${originalNameWithoutExt}.${fileExtension}`;
+
         const region = this.configService.get<string>('AWS_REGION2') || 'us-east-1';
 
         try {
@@ -42,8 +63,8 @@ export class S3ProviderSkill {
             const command = new PutObjectCommand({
                 Bucket: this.bucketName,
                 Key: fileKey,
-                Body: file.buffer,
-                ContentType: file.mimetype,
+                Body: fileBuffer,
+                ContentType: contentType,
             });
 
             await this.s3Client.send(command);

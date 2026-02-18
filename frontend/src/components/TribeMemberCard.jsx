@@ -25,8 +25,8 @@ export default function TribeMemberCard({ member }) {
                 <div className="relative w-20 h-20 rounded-full border-2 border-kallpa-gold overflow-hidden shadow-[0_0_20px_rgba(212,175,55,0.3)] group-hover:shadow-gold-glow transition-all duration-300">
                     {member.avatarUrl ? (
                         <img 
-                            src={member.avatarUrl.replace(/([^/]+)\.jpg$/, (match, name) => {
-                                return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase() + '.jpg';
+                            src={member.avatarUrl.replace(/([^/]+)\.(jpg|png|webp)$/, (match, name) => {
+                                return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase() + '.webp';
                             })} 
                             alt={member.fullName} 
                             className="w-full h-full object-cover" 

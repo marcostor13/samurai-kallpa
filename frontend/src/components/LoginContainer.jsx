@@ -3,10 +3,12 @@ import axios from 'axios';
 import { API_URL } from '../config';
 import KatanaButton from './KatanaButton';
 import AntigravityCard from './AntigravityCard';
+import { Eye, EyeOff } from 'lucide-react';
 
 export default function LoginContainer() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
@@ -32,20 +34,30 @@ export default function LoginContainer() {
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              className="w-full bg-black/50 border border-gray-700 text-white p-3 rounded focus:border-kallpa-gold focus:outline-none transition-colors"
+              className="w-full bg-black/50 border border-gray-700 text-white p-3 rounded focus:border-kallpa-gold focus:outline-none transition-colors uppercase"
               placeholder="Ej: ALONSO"
               required
             />
           </div>
           <div>
             <label className="block text-kallpa-muted text-sm uppercase tracking-widest mb-2">Contraseña</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full bg-black/50 border border-gray-700 text-white p-3 rounded focus:border-kallpa-gold focus:outline-none transition-colors"
-              required
-            />
+            <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full bg-black/50 border border-gray-700 text-white p-3 rounded focus:border-kallpa-gold focus:outline-none transition-colors"
+                  required
+                />
+                <button 
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-kallpa-gold transition-colors"
+                  title={showPassword ? "Ocultar contraseña" : "Ver contraseña"}
+                >
+                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                </button>
+            </div>
           </div>
           <KatanaButton type="submit" className="w-full justify-center">
             Entrar

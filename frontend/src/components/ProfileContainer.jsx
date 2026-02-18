@@ -80,8 +80,8 @@ export default function ProfileContainer({ memberId: propMemberId } = {}) {
                     <div className="relative">
                         <div className="w-48 h-48 rounded-full border-4 border-kallpa-gold overflow-hidden shadow-[0_0_50px_rgba(212,175,55,0.3)]">
                             <img 
-                                src={member.avatarUrl?.replace(/([^/]+)\.jpg$/, (match, name) => {
-                                    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase() + '.jpg';
+                                src={member.avatarUrl?.replace(/([^/]+)\.(jpg|png|webp)$/, (match, name) => {
+                                    return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase() + '.webp';
                                 })} 
                                 alt={member.fullName} 
                                 className="w-full h-full object-cover"
@@ -102,16 +102,24 @@ export default function ProfileContainer({ memberId: propMemberId } = {}) {
                         
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
                             {member.email && (
-                                <div className="flex items-center gap-3 text-gray-400">
+                                <a 
+                                    href={`mailto:${member.email}`}
+                                    className="flex items-center gap-3 text-gray-400 hover:text-kallpa-teal transition-colors cursor-pointer"
+                                >
                                     <Mail size={18} className="text-kallpa-teal" />
                                     <span>{member.email}</span>
-                                </div>
+                                </a>
                             )}
                             {member.phone && (
-                                <div className="flex items-center gap-3 text-gray-400">
+                                <a 
+                                    href={`https://wa.me/${member.phone?.replace(/\D/g, '')}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center gap-3 text-gray-400 hover:text-kallpa-teal transition-colors cursor-pointer"
+                                >
                                     <Phone size={18} className="text-kallpa-teal" />
                                     <span>{member.phone}</span>
-                                </div>
+                                </a>
                             )}
                             {member.address && (
                                 <div className="flex items-center gap-3 text-gray-400">

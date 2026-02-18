@@ -211,8 +211,8 @@ export default function DashboardContainer() {
                                         <div className="w-full h-full rounded-full overflow-hidden">
                                             {userProfile.avatarUrl ? (
                                                 <img 
-                                                    src={userProfile.avatarUrl.replace(/([^/]+)\.jpg$/, (match, name) => {
-                                                        return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase() + '.jpg';
+                                                    src={userProfile.avatarUrl.replace(/([^/]+)\.(jpg|png|webp)$/, (match, name) => {
+                                                        return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase() + '.webp';
                                                     })} 
                                                     alt={userProfile.fullName} 
                                                     className="w-full h-full object-cover" 
@@ -243,12 +243,17 @@ export default function DashboardContainer() {
                         {userProfile && (
                             <div className="space-y-4 border-t border-white/5 pt-6 mt-2">
                                 <div className="grid grid-cols-2 gap-4">
-                                    <div className="flex flex-col group p-3 rounded-lg bg-white/5 border border-transparent hover:border-kallpa-gold/20 transition-all">
+                                    <a 
+                                        href={`https://wa.me/${userProfile.phone?.replace(/\D/g, '')}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="flex flex-col group p-3 rounded-lg bg-white/5 border border-transparent hover:border-kallpa-gold/20 transition-all cursor-pointer"
+                                    >
                                         <span className="text-[9px] text-gray-500 uppercase tracking-widest font-bold mb-1 flex items-center gap-1">
                                             <Phone size={10} className="text-kallpa-gold" /> Teléfono
                                         </span>
                                         <span className="text-xs text-white font-medium">{userProfile.phone || 'S/D'}</span>
-                                    </div>
+                                    </a>
                                     <div className="flex flex-col group p-3 rounded-lg bg-white/5 border border-transparent hover:border-kallpa-teal/20 transition-all">
                                         <span className="text-[9px] text-gray-500 uppercase tracking-widest font-bold mb-1 flex items-center gap-1">
                                             <MapPin size={10} className="text-kallpa-teal" /> Ciudad
