@@ -13,7 +13,8 @@ export class AuthSkill {
     ) { }
 
     async validateUser(username: string, pass: string): Promise<any> {
-        const user = await this.userModel.findOne({ username });
+        if (!username || !pass) return null;
+        const user = await this.userModel.findOne({ username: { $regex: new RegExp(`^${username.trim()}$`, 'i') } });
         if (user && (await bcrypt.compare(pass, user.password))) {
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             const { password, ...result } = user.toObject();
