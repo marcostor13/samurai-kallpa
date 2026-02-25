@@ -38,4 +38,25 @@ export class IdentityManagerSkill {
         }
         return user;
     }
+
+    async getAllUsers(): Promise<User[]> {
+        return this.userModel.find().select('_id username fullName role avatarUrl').sort({ username: 1 });
+    }
+
+    async adminUpdatePassword(adminId: string, targetUserId: string, newPassword: string): Promise<User> {
+        const adminUser = await this.userModel.findById(adminId);
+        if (!adminUser || adminUser.role !== 'SENSEI') {
+            throw new ConflictException('Unauthorized. Only SENSEI can perform this action.');
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        const user = await this.userModel
+            .findByIdAndUpdate(targetUserId, { password: hashedPassword }, { new: true })
+            .select('-password');
+
+        if (!user) {
+            throw new NotFoundException('Target user not found');
+        }
+        return user;
+    }
 }

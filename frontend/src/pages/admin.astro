@@ -1,0 +1,8 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import AdminContainer from '../components/AdminContainer.jsx';
+---
+
+<MainLayout title="Panel de Administrador">
+    <AdminContainer client:only="react" />
+</MainLayout>

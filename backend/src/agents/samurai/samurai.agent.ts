@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Get, Patch, UseGuards, Request } from '@nestjs/common';
+import { Controller, Post, Body, Get, Patch, Put, Param, UseGuards, Request } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { IdentityManagerSkill } from '../../skills/samurai/identity-manager.skill';
 import { DashboardOracleSkill } from '../../skills/samurai/dashboard-oracle.skill';
@@ -31,5 +31,17 @@ export class SamuraiAgent {
     @Get('dashboard')
     async getDashboard(@Request() req: any) {
         return this.dashboardOracle.getDashboardStats(req.user.userId);
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Get('admin/users')
+    async getAllUsers() {
+        return this.identityManager.getAllUsers();
+    }
+
+    @UseGuards(AuthGuard('jwt'))
+    @Put('admin/users/:id/password')
+    async adminUpdatePassword(@Request() req: any, @Param('id') targetUserId: string, @Body() body: any) {
+        return this.identityManager.adminUpdatePassword(req.user.userId, targetUserId, body.newPassword);
     }
 }
